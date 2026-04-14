@@ -17,11 +17,17 @@ const pool = mysql.createPool({
 });
 //routes
 app.get('/', async (req, res) => {
-    let sql = `SELECT authorId, firstName, lastName
+    let sqlA = `SELECT authorId, firstName, lastName
     FROM authors
     ORDER BY lastname`;
-    const [rows] = await pool.query(sql);
-   res.render("home", {"authors":rows});
+    const [authors] = await pool.query(sqlA);
+
+    let sqlB = `SELECT DISTINCT category
+    FROM quotes
+    ORDER BY category`;
+    const [categories] = await pool.query(sqlB);
+
+    res.render("home", {authors, categories});
 });
 
 app.get('/searchByKeyword', async (req, res) => {
@@ -49,7 +55,7 @@ app.get('/searchByAuthor', async (req, res) => {
 })
 
 app.get('/api/author/:id', async (req, res) => {
-    let authorId = req.params.id;
+    let authorId = req.params.authorId;
     let sql = `SELECT *
     FROM authors
     WHERE authorId = ? `;
@@ -61,12 +67,12 @@ app.get("/searchByLikes", async (req, res) => {
     let min = req.query.min || 0;
     let max = req.query.max || 100000;
 
-    let sql = `SELECT quote, firstName, lastName
-    FROM q_quotes
-    NATURAL JOIN q_authors
+    let sql = `SELECT authorId, firstName, lastName, quote
+    FROM quotes
+    NATURAL JOIN authors
     WHERE likes BETWEEN ? AND ?`;
-
-    const [rows] = await pool.query(sql, [min, max]);
+    let sqlParams = [min, max]
+    const [rows] = await pool.query(sql, sqlParams);
 
     res.render("results", {"quotes":rows});
 });

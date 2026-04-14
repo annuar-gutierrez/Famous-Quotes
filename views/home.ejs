@@ -5,18 +5,19 @@
     <h1> Quote Finder </h1>
 
     <form action="/searchByKeyword" method="GET">
-        Keyword: 
+        <h2>Keyword :</h2> 
         <input type="text" name="keyword">
         <button>Search by Keyword</button>
     </form>
 
     <br>
 
-    <form action="/searchByAuthor">
+    <form action="/searchByAuthor" method="GET">
         <select name="authorId">
-            <% for (author of authors) { %>
-                <option value="<%=author.authorId%>">
-                    <%=author.firstName%> <%=author.lastName%>
+            <h2>Authors: </h2>
+            <% for (let i of authors) { %>
+                <option value="<%=i.authorId%>">
+                    <%=i.firstName%> <%=i.lastName%>
                 </option>
             <% } %>
 
@@ -31,6 +32,26 @@
 
         </select>
         <button>Search by Author</button>
+    </form>
+
+    <form action="/searchByCategory" method="GET">
+        <select name="category">
+            <h2>Category: </h2>
+            <% for(let c of categories){ %>
+                <option value="<%= c.category %>">
+                    <%= c.category %>
+                </option>
+            <% } %>
+            </select>
+        </select>
+        <button>Search by Category</button>
+    </form>
+
+    <form action="/searchByLikes">
+        <h2>Likes</h2>
+        Min Likes: <input type="number" name="min">
+        Max Likes: <input type="number" name="max">
+        <button>Search by Likes</button>
     </form>
 
     <%- include("partials/footer.ejs") %>
