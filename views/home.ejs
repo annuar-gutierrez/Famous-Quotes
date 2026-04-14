@@ -13,8 +13,8 @@
     <br>
 
     <form action="/searchByAuthor" method="GET">
+        <h2>Authors: </h2>
         <select name="authorId">
-            <h2>Authors: </h2>
             <% for (let i of authors) { %>
                 <option value="<%=i.authorId%>">
                     <%=i.firstName%> <%=i.lastName%>
@@ -34,9 +34,11 @@
         <button>Search by Author</button>
     </form>
 
+    <br>
+
     <form action="/searchByCategory" method="GET">
+        <h2>Category: </h2>
         <select name="category">
-            <h2>Category: </h2>
             <% for(let c of categories){ %>
                 <option value="<%= c.category %>">
                     <%= c.category %>
@@ -47,7 +49,9 @@
         <button>Search by Category</button>
     </form>
 
-    <form action="/searchByLikes">
+    <br>
+
+    <form action="/searchByLikes" method="GET">
         <h2>Likes</h2>
         Min Likes: <input type="number" name="min">
         Max Likes: <input type="number" name="max">

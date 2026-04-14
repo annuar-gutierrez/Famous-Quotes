@@ -83,7 +83,7 @@ app.get("/searchByCategory", async (req, res) => {
     NATURAL JOIN q_authors
     WHERE category = ?`;
 
-  const [rows] = await pool.query(sql, [req.query.category]);
+    const [rows] = await pool.query(sql, [req.query.category]);
 
   res.render("results", {"quotes":rows});
 });
