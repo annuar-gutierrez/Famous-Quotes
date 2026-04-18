@@ -55,8 +55,8 @@ app.get('/searchByAuthor', async (req, res) => {
 })
 
 app.get('/api/author/:id', async (req, res) => {
-    let authorId = req.params.authorId;
-    let sql = `SELECT *
+    let authorId = req.params.id;
+    let sql = `SELECT *, DATE_FORMAT(dob, '%Y-%m-%d') ISOdob, DATE_FORMAT(dod, '%Y-%m-%d') ISOdod
     FROM authors
     WHERE authorId = ? `;
     const [rows] = await pool.query(sql, [authorId]);

@@ -1,13 +1,15 @@
 <%- include("partials/header.ejs") %>
 
 <body>
-
+    <br>
     <h1> Quote Finder </h1>
+    <hr>
 
-    <form action="/searchByKeyword" method="GET">
+    <form id="searchByKeywordForm" action="/searchByKeyword" method="GET">
         <h2>Keyword :</h2> 
         <input type="text" name="keyword">
         <button>Search by Keyword</button>
+        <small id="errorMsg"></small>
     </form>
 
     <br>
@@ -53,11 +55,33 @@
 
     <form action="/searchByLikes" method="GET">
         <h2>Likes</h2>
-        Min Likes: <input type="number" name="min">
-        Max Likes: <input type="number" name="max">
+        <input type="number" name="min" placeholder="Min Likes">
+        <input type="number" name="max" placeholder="Max Likes">
         <button>Search by Likes</button>
     </form>
 
     <%- include("partials/footer.ejs") %>
+    <script>
+      document.querySelector("#searchByKeywordForm").addEventListener("submit", validateKeywordForm);
+
+      //ensure that keyword has at least 3 characters
+      function validateKeywordForm(){
+        let keyword = document.querySelector("input[name=keyword]").value;
+        let errorMsg = document.querySelector("#errorMsg");
+
+        if (keyword.length < 3) {
+        
+
+
+            event.preventDefault(); //prevents the form submission.
+            errorMsg.textContent = "Keyword must be at least 3 characters.";
+            // alert("keyword must be at least 3 characters");
+            // event.preventDefault(); //prevents the form submission.
+        }
+        
+      }
+
+
+    </script>
 </body>
 </html>
